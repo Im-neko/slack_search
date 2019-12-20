@@ -1,0 +1,45 @@
+version: "3"
+services:
+
+  # crawler
+  crawler:
+    build:
+      context: .
+      dockerfile: crawler/Dockerfile
+    env_file: .env
+    environment:
+      ELASTICSEARCH_HOSTS: http://elastic:9200
+      TZ: Asia/Tokyo
+      API_TOKEN: $API_TOKEN
+    volumes:
+      - ./crawler:/src
+
+  # view
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:7.2.0
+    environment:
+      ELASTICSEARCH_HOSTS: http://elastic:9200
+      TZ: Asia/Tokyo
+    depends_on:
+      - elastic
+    ports: 
+      - "5601:5601"
+    restart: always
+
+  # db
+  elastic:
+    build:
+      context: .
+      dockerfile: elastic/Dockerfile
+    environment:
+      discovery.type: single-node
+      TZ: Asia/Tokyo
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports: 
+      - "9200:9200"
+    restart: always
+
+volumes:
+  elasticsearch-data:
+    driver: local
