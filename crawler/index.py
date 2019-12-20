@@ -29,7 +29,6 @@ while True:
     url = API_URL_BASE % (API_TOKEN, q, p)
     res = urllib.request.urlopen(url)
     json_res = json.loads(res.read().decode('utf8'))
-    pp.pprint(json_res)
     paging = json_res['messages']['paging']
     print("%d/%d" % (paging['page'], paging['pages']))
     for message in json_res['messages']['matches']:
