@@ -33,7 +33,7 @@ while True:
     print("%d/%d" % (paging['page'], paging['pages']))
     for message in json_res['messages']['matches']:
         try:
-            if not message['channel']['is_channel'] or message['type'] != 'message':
+            if not message['channel']['is_channel'] or message['type'] != 'message' or message['channel']['is_private']:
                 continue
             data = message
             data['ts'] = float(message['ts'])
