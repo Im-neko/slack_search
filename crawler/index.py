@@ -42,7 +42,7 @@ while True:
         except Exception as e:
             print("---error---")
             print(e)
-    if (p >= paging['pages']):
+    if (p >= paging['pages'] or p > 100):
         break
     p = p + 1
     time.sleep(REQUEST_INTERVAL)
