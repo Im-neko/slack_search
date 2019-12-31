@@ -38,7 +38,7 @@ while True:
             data = message
             data['ts'] = float(message['ts'])
             data['datetime'] = datetime.datetime.fromtimestamp(float(data['ts']), datetime.timezone.utc).strftime('%Y/%m/%d %H:%M:%S')
-            res = es.index(index="slack-"message['channel']['name'], doc_type="message", body=data)
+            res = es.index(index="slack-"+message['channel']['name'], doc_type="message", body=data)
         except Exception as e:
             print("---error---")
             print(e)
